@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+import { updateGithubName } from './actions/actions';
+
 class App extends Component {
-  state = {
-    githubName: '',
-  }
+  state = {}
 
   handleChange = (e) => {
-    e.preventDefault();
-    this.setState({ githubName: e.target.value });
+    this.props.dispatch(updateGithubName(e.target.value));
   }
 
   handleSearch = (e) => {
     e.preventDefault();
-    console.log('SUBMITTED', this.state.githubName)
+    console.log('SUBMITTED', this.props.searchReducer.githubName);
   }
 
   render() {
@@ -33,7 +35,7 @@ class App extends Component {
                 <TextField
                   id='github_name'
                   label='GitHub User Name'
-                  value={this.state.githubName}
+                  value={this.props.searchReducer.githubName}
                   onChange={this.handleChange}
                   margin='normal'
                 />
@@ -51,4 +53,15 @@ class App extends Component {
   }
 }
 
-export default App;
+App.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  searchReducer: PropTypes.shape({
+    githubName: PropTypes.string,
+  }).isRequired,
+};
+
+const mapStateToProps = state => ({
+  searchReducer: state.searchReducer,
+});
+
+export default connect(mapStateToProps)(App);
