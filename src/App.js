@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import { updateGithubName } from './actions/actions';
+import { updateGithubName, retrieveGithubRepos } from './actions/actions';
 
 class App extends Component {
   state = {}
@@ -18,6 +18,7 @@ class App extends Component {
   handleSearch = (e) => {
     e.preventDefault();
     console.log('SUBMITTED', this.props.searchReducer.githubName);
+    this.props.dispatch(retrieveGithubRepos(this.props.searchReducer.githubName));
   }
 
   render() {
