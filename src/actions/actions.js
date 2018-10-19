@@ -1,15 +1,22 @@
 import axios from 'axios';
 
+// Exported actions
 export const updateGithubName = (githubName) => {
   return {
     type: 'UPDATE_GITHUB_NAME',
     payload: githubName,
   };
 }
-const updateReposArray = (reposArray) => {
+export const updateReposArray = (reposArray) => {
   return {
     type: 'UPDATE_REPOS_ARRAY',
     payload: reposArray,
+  };
+}
+export const updateInvalidSearch = (invalidSearch) => {
+  return {
+    type: 'UPDATE_INVALID_SEARCH',
+    payload: invalidSearch,
   };
 }
 
@@ -21,11 +28,11 @@ export const retrieveGithubRepos = (githubName) => {
       method: 'get',
     })
       .then(response => {
-        console.log('success', response.data);
         dispatch(updateReposArray(response.data));
       })
       .catch(err => {
         console.error('GITHUB API ERROR:', err);
+        dispatch(updateInvalidSearch(true));
       })
   };
 };

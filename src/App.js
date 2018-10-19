@@ -3,26 +3,48 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 
-import { updateGithubName, retrieveGithubRepos } from './actions/actions';
+// Actions
+import {
+  updateGithubName,
+  updateReposArray,
+  retrieveGithubRepos,
+  updateInvalidSearch
+} from './actions/actions';
+
+// Styled Components
+import {
+  GithubLogo,
+  TopTitle,
+  NoResultsH3,
+  StyledListItem,
+  MainGrid
+} from './styledComponents';
 
 class App extends Component {
   state = {}
 
   // Updates github name input
   handleInputChange = (e) => {
+    // Removes search error if true
+    if (this.props.searchReducer.invalidSearch) {
+      this.props.dispatch(updateInvalidSearch(false));
+    }
+    // Updates search value
     this.props.dispatch(updateGithubName(e.target.value));
   }
 
   // Submits request to github based on input name
   handleSearch = (e) => {
     e.preventDefault();
+    if (this.props.searchReducer.reposArray.length) {
+      this.props.dispatch(updateReposArray([]));
+    }
+    // Makes get request to GitHub API and retrieves repo data if successful
     this.props.dispatch(retrieveGithubRepos(this.props.searchReducer.githubName));
   }
 
@@ -31,17 +53,27 @@ class App extends Component {
     window.open(repo.clone_url, '_blank');
   }
 
+  // Maps through and renders repos when get request is successful
   renderRepoItems = () => {
-    const { reposArray } = this.props.searchReducer;
+    const { reposArray, invalidSearch } = this.props.searchReducer;
+    if (invalidSearch) {
+      return (
+        <div>
+          <NoResultsH3>
+            No results. Please try another GitHub username.
+          </NoResultsH3>
+        </div>
+      )
+    }
     if (reposArray.length === 0) {
       return null;
     }
 
     const repos = reposArray.map(repo => {
       return (
-        <ListItem button key={repo.id} onClick={() => { this.handleRepoClick(repo)} } style={{ border: '1px solid lightgray', marginBottom: '-1px' }} title={repo.clone_url}>
+        <StyledListItem button key={repo.id} onClick={() => { this.handleRepoClick(repo)} } title={repo.clone_url}>
           <ListItemText primary={repo.name} secondary={repo.description} />
-        </ListItem>
+        </StyledListItem>
       )
     });
 
@@ -50,11 +82,12 @@ class App extends Component {
 
   render() {
     return (
-      <Grid alignItems='center' container direction='column' justify='center' style={{ paddingTop: '50px' }}>
-        <Grid item>
-          <header>
-            <h1>GitHub Repo Search</h1>
-          </header>
+      <MainGrid alignItems='center' container direction='column' justify='center'>
+        <a href='https://github.com/' rel='noopener noreferrer' target='_blank'>
+          <GithubLogo alt='github' src='https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png' />
+        </a>
+        <Grid item xs={9} sm={10}>
+          <TopTitle>GitHub Repository Search</TopTitle>
         </Grid>
         <Grid item>
           <form noValidate autoComplete='off'>
@@ -76,12 +109,12 @@ class App extends Component {
             </Grid>
           </form>
         </Grid>
-        <Grid item>
-          <List component="nav">
+        <Grid item xs={11} sm={12}>
+          <List>
             {this.renderRepoItems()}
           </List>
         </Grid>
-      </Grid>
+      </MainGrid>
     );
   }
 }
