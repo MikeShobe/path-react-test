@@ -1,9 +1,15 @@
 import axios from 'axios';
 
-export function updateGithubName(githubName) {
+export const updateGithubName = (githubName) => {
   return {
     type: 'UPDATE_GITHUB_NAME',
     payload: githubName,
+  };
+}
+const updateReposArray = (reposArray) => {
+  return {
+    type: 'UPDATE_REPOS_ARRAY',
+    payload: reposArray,
   };
 }
 
@@ -15,11 +21,11 @@ export const retrieveGithubRepos = (githubName) => {
       method: 'get',
     })
       .then(response => {
-        console.log('success', response);
-        // dispatch(updatePromoCodeLoading(false));
+        console.log('success', response.data);
+        dispatch(updateReposArray(response.data));
       })
       .catch(err => {
-        console.error('ERROR', err);
+        console.error('GITHUB API ERROR:', err);
       })
   };
 };
