@@ -1,15 +1,15 @@
 import React from 'react';
 
-import List from '@material-ui/core/List';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
 import TextField from '@material-ui/core/TextField';
 
 // Styled Components
 import {
   GithubLogo,
   TopTitle,
-  MainGrid
+  MainGrid,
+  SearchButton
 } from './../styledComponents/githubSearch';
 
 const GithubSearchView = (props) => (
@@ -33,9 +33,9 @@ const GithubSearchView = (props) => (
             />
           </Grid>
           <Grid item xs={3}>
-            <Button onClick={props.handleSearch} variant='outlined'>
+            <SearchButton onClick={props.handleSearch} variant='outlined'>
               Search
-            </Button>
+            </SearchButton>
           </Grid>
         </Grid>
       </form>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import GithubSearch from './containers/GithubSearch';
 
+// Primary parent component
 class App extends Component {
   state = {}
 

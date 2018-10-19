@@ -28,7 +28,6 @@ export const retrieveGithubRepos = (githubName) => {
       method: 'get',
     })
       .then(response => {
-        console.log('response', response)
         if (response.data.length === 0) {
           dispatch(updateInvalidSearch(true));
         } else {
@@ -36,7 +35,7 @@ export const retrieveGithubRepos = (githubName) => {
         }
       })
       .catch(err => {
-        console.error('GITHUB API ERROR:', err);
+        console.error('GITHUB REQUEST ERROR:', err);
         dispatch(updateInvalidSearch(true));
       })
   };

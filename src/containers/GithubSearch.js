@@ -52,7 +52,6 @@ class GithubSearch extends Component {
   // Maps through and renders repos when get request is successful
   renderRepoItems = () => {
     const { reposArray, invalidSearch } = this.props.searchReducer;
-    console.log('reposArray', reposArray)
     if (invalidSearch) {
       return (
         <div>

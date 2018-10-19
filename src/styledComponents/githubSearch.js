@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
 
@@ -15,6 +16,7 @@ export const TopTitle = styled.h1`
 export const NoResultsH3 = styled.h3`
   color: red;
   font-weight: 400;
+  text-align: center;
 `;
 
 // Material-UI Components
@@ -29,4 +31,7 @@ export const StyledListItem = styled(ListItem)`
 `;
 export const MainGrid = styled(Grid)`
   padding-top: 50px !important;
+`;
+export const SearchButton = styled(Button)`
+  top: 10px !important
 `;
