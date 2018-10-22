@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import Grid from '@material-ui/core/Grid';
 import ListItemText from '@material-ui/core/ListItemText';
 
 // UI Components
 import GithubSearchView from './../components/GithubSearchView';
+
 
 // Actions
 import {
@@ -19,6 +21,7 @@ import {
 import {
   NoResultsH3,
   StyledListItem,
+  StarIcon,
 } from './../styledComponents/githubSearch';
 
 class GithubSearch extends Component {
@@ -64,11 +67,18 @@ class GithubSearch extends Component {
     if (reposArray.length === 0) {
       return null;
     }
-
     const repos = reposArray.map(repo => {
       return (
         <StyledListItem button key={repo.id} onClick={() => { this.handleRepoClick(repo)} } title={repo.clone_url}>
           <ListItemText primary={`${repo.name} ${repo.fork ? '(fork)' : ''}`} secondary={repo.description} />
+          <Grid alignItems='center' container direction='row' justify='flex-end'>
+            <Grid item>
+              {repo.stargazers_count}
+            </Grid>
+            <Grid item>
+              <StarIcon alt='star' src='https://www.materialui.co/materialIcons/toggle/star_black_216x216.png' />
+            </Grid>
+          </Grid>
         </StyledListItem>
       )
     });

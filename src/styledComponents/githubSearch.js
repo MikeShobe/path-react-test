@@ -8,6 +8,11 @@ export const GithubLogo = styled.img`
   width: 50px;
   text-align: center;
 `;
+export const StarIcon = styled.img`
+  width: 24px;
+  margin-left: 3px;
+  opacity: 0.6;
+`;
 
 // headers
 export const TopTitle = styled.h1`
