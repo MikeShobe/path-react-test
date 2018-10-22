@@ -80,7 +80,6 @@ class GithubSearch extends Component {
     return (
       <GithubSearchView
         handleInputChange={this.handleInputChange}
-        handleEnterSearch={this.handleEnterSearch}
         handleSearch={this.handleSearch}
         renderRepoItems={this.renderRepoItems}
         searchReducer={this.props.searchReducer}
